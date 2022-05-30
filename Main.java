@@ -2,501 +2,258 @@ import java.util.*;
 import java.io.*;
 
 public class Main
-{
-  public static void main (String[]args)
+{ 
+  private int pH = 0;		// score for player
+  private int dH = 0;
+  private int cardsDealt[] = new int[13];
+  private boolean plAce = false;	// ace high in hand so that player can't bust on ace
+  private boolean dlAce = false;
+  private Random rand = new Random ();
+  private Scanner input = new Scanner (System.in);
+  public int hit (int score, boolean player)
   {
-	int play = 1;
-	while(play ==1) {
-    Random rand = new Random ();
-    Scanner input = new Scanner (System.in);
-    int pH = 0; //score for player
-    int dH = 0;
-    int ac = 0; //card count
-    int tw = 0;
-    int th = 0;
-    int fo = 0;
-    int fi = 0;
-    int si = 0;
-    int se = 0;
-    int ei = 0;
-    int ni = 0;
-    int te = 0; //counts face cards separately thus ensuring that the deck is dealt with realistic odds.
-    int ja = 0;
-    int qu = 0;
-    int ki = 0;
-    int temp = 0; //card dealt
-    int plAce = 0; //ace high in hand so that player can't bust on ace
-    int dlAce = 0;
-    for (int i = 0; i < 2; i++) //initial deal 2 cards 
+    boolean hit = true;
+    while (hit)
       {
-	temp = rand.nextInt (13) + 1;
+	int temp = rand.nextInt (13) + 1;
 	switch (temp)
 	  {
 	  case 1:
-	    ac++;//adds to the card count when a card is dealt. 
-	    if (plAce == 0) //if 2 aces are dealt, the second ace becomes a 1 so that the hand doesn't bust on initial deal
+	    if (this.cardsDealt[0] < 4)
 	      {
-		pH += 11;
-		plAce++; //ace high count when given 11
-	      }
-	    else
-	      {
-		pH++;
-	      }
-	    break;
-	  case 2:
-	    tw++;
-	    pH += 2;
-	    break;
-	  case 3:
-	    th++;
-	    pH += 3;
-	    break;
-	  case 4:
-	    fo++;
-	    pH += 4;
-	    break;
-	  case 5:
-	    fi++;
-	    pH += 5;
-	    break;
-	  case 6:
-	    si++;
-	    pH += 6;
-	    break;
-	  case 7:
-	    se++;
-	    pH += 7;
-	    break;
-	  case 8:
-	    ei++;
-	    pH += 8;
-	    break;
-	  case 9:
-	    ni++;
-	    pH += 9;
-	    break;
-	  case 10: 
-	    te++;
-	    pH += 10;
-	    break;
-	  case 11:
-	    ja++;
-	    pH += 10;
-	    break;
-	  case 12:
-	    qu++;
-	    pH += 10;
-	    break;
-	  case 13:
-	    ki++;
-	    pH += 10;
-	    break;
-	  }
-      }
-    System.out.println ("You have: " + pH); //player hand announcement
-    for (int i = 0; i < 2; i++) //dealer hand dealt
-      {
-	temp = rand.nextInt (13) + 1;
-	switch (temp)
-	  {
-	  case 1:
-	    ac++;
-	    if (dlAce == 0)
-	      {
-		dH += 11;
-		dlAce++;
-	      }
-	    else
-	      {
-		dH++;
+		this.cardsDealt[0] += 1;
+		score += 11;
+		if (score > 21)
+		  {
+		    score -= 10;
+		  }
+		else
+		  {
+		    if (player)
+		      {
+			this.plAce = true;
+		      }
+		    else
+		      {
+			this.dlAce = true;
+		      }
+		  }
+		System.out.println ("Dealer has dealt an Ace");
+		hit = false;
 	      }
 	    break;
 	  case 2:
-	    tw++;
-	    dH += 2;
+	    if (this.cardsDealt[1] < 4)
+	      {
+		this.cardsDealt[1] += 1;
+		score += 2;
+		hit = false;
+		System.out.println ("Dealer has dealt a 2");
+	      }
 	    break;
 	  case 3:
-	    th++;
-	    dH += 3;
+	    if (this.cardsDealt[2] < 4)
+	      {
+		this.cardsDealt[2] += 1;
+		score += 3;
+		System.out.println ("Dealer has dealt a 3");
+		hit = false;
+	      }
 	    break;
 	  case 4:
-	    fo++;
-	    dH += 4;
+	    if (this.cardsDealt[3] < 4)
+	      {
+		this.cardsDealt[3] += 1;
+		score += 4;
+		System.out.println ("Dealer has dealt a 4");
+		hit = false;
+	      }
 	    break;
 	  case 5:
-	    fi++;
-	    dH += 5;
+	    if (this.cardsDealt[4] < 4)
+	      {
+		this.cardsDealt[4] += 1;
+		score += 5;
+		System.out.println ("Dealer has dealt a 5");
+		hit = false;
+	      }
 	    break;
 	  case 6:
-	    si++;
-	    dH += 6;
+	    if (this.cardsDealt[5] < 4)
+	      {
+		this.cardsDealt[5] += 1;
+		score += 6;
+		System.out.println ("Dealer has dealt a 6");
+		hit = false;
+	      }
 	    break;
 	  case 7:
-	    se++;
-	    dH += 7;
+	    if (this.cardsDealt[6] < 4)
+	      {
+		this.cardsDealt[6] += 1;
+		score += 7;
+		System.out.println ("Dealer has dealt a 7");
+		hit = false;
+	      }
 	    break;
 	  case 8:
-	    ei++;
-	    dH += 8;
+	    if (this.cardsDealt[7] < 4)
+	      {
+		this.cardsDealt[7] += 1;
+		score += 8;
+		System.out.println ("Dealer has dealt an 8");
+		hit = false;
+	      }
 	    break;
 	  case 9:
-	    ni++;
-	    dH += 9;
+	    if (this.cardsDealt[8] < 4)
+	      {
+		this.cardsDealt[8] += 1;
+		score += 9;
+		System.out.println ("Dealer has dealt a 9");
+		hit = false;
+	      }
 	    break;
 	  case 10:
-	    te++;
-	    dH += 10;
+	    if (this.cardsDealt[9] < 4)
+	      {
+		this.cardsDealt[9] += 1;
+		score += 10;
+		System.out.println ("Dealer has dealt a 10");
+		hit = false;
+	      }
 	    break;
 	  case 11:
-	    ja++;
-	    dH += 10;
+	    if (this.cardsDealt[10] < 4)
+	      {
+		this.cardsDealt[10] += 1;
+		hit = false;
+		score += 10;
+		System.out.println ("Dealer has dealt a Jack");
+	      }
 	    break;
 	  case 12:
-	    qu++;
-	    dH += 10;
+	    if (this.cardsDealt[11] < 4)
+	      {
+		this.cardsDealt[11] += 1;
+		hit = false;
+		System.out.println ("Dealer has dealt a Queen");
+		score += 10;
+	      }
 	    break;
 	  case 13:
-	    ki++;
-	    dH += 10;
+	    if (this.cardsDealt[12] < 4)
+	      {
+		this.cardsDealt[12] += 1;
+		score += 10;
+		System.out.println ("Dealer has dealt a King");
+		hit = false;
+	      }
 	    break;
 	  }
       }
-    System.out.println ("Dealer has: " + dH); //announces dealer hand
-
-    if (dH == 21) //win conditions
+    return score;
+  }
+  public void run ()
+  {
+    this.pH = hit (this.pH, true);
+    this.pH = hit (this.pH, true);
+    if (this.pH == 21)
       {
-	System.out.println ("BLACKJACK! Dealer wins...");
-      }
-    else if (pH == 21)
-      {
-	System.out.println ("BLACKJACK! You win!");
+	System.out.println ("Blackjack! You win!");
       }
     else
       {
-	System.out.println ("Do you want to hit? 1 for yes, 2 for no");
-	int hit= input.nextInt();
-	for (int j = hit; j <2;) { //hit mechanic
-	    for (int i = 0; i < 1;) //checks for card is dealt. 
+	boolean inv = true;
+	String temp = "";
+	while (inv && this.pH < 21)
+	  {
+	    System.out.println ("You have: " + this.pH + "."
+				+ "\nWould you like to hit? (y/n)");
+	    temp = input.nextLine ();
+	    if (temp.equalsIgnoreCase ("Y"))
 	      {
-		temp = rand.nextInt (13) + 1;
-
-		switch (temp)
+		this.pH = hit (this.pH, true);
+		if (this.pH > 21 && this.plAce)
 		  {
-		  case 1:
-		    if (ac < 4) //checks if there are aces in the deck, if not skips over and breaksto next loop
-		      {
-			ac++;
-			if (pH < 11) 
-			  {
-			    pH += 11;
-			    plAce++; //high ace count raised if played
-			  }
-			else
-			  {
-			    pH++; //low ace
-			  }
-			i++; //card count raised here, no matter what 
-			System.out.println("You've been dealt an ace!");
-		      }
-		    break; //exit 
-		  case 2:
-		    if (tw < 4)
-		      {
-			tw++;
-			pH += 2;
-			i++;
-			System.out.println("You've been dealt a two!");
-		      }
-		    break;
-		  case 3:
-		    if (th < 4)
-		      {
-			th++;
-			pH += 3;
-			i++;
-			System.out.println("You've been dealt a three!");
-		      }
-		    break;
-		  case 4:
-		    if (fo < 4)
-		      {
-			fo++;
-			pH += 4;
-			i++;
-			System.out.println("You've been dealt a four!");
-		      }
-		    break;
-		  case 5:
-		    if (fi < 4)
-		      {
-			fi++;
-			pH += 5;
-			i++;
-			System.out.println("You've been dealt a five!");
-		      }
-		    break;
-		  case 6:
-		    if (si < 4)
-		      {
-			si++;
-			pH += 6;
-			i++;
-			System.out.println("You've been dealt a six!");
-		      }
-		    break;
-		  case 7:
-		    if (se < 4)
-		      {
-			se++;
-			pH += 7;
-			i++;
-			System.out.println("You've been dealt a seven!");
-		      }
-		    break;
-		  case 8:
-		    if (ei < 4)
-		      {
-			ei++;
-			pH += 8;
-			i++;
-			System.out.println("You've been dealt an eight!");
-		      }
-		    break;
-		  case 9:
-		    if (ni < 4)
-		      {
-			ni++;
-			pH += 9;
-			i++;
-			System.out.println("You've been dealt a nine!");
-		      }
-		    break;
-		  case 10:
-		    if (te < 4)
-		      {
-			te++;
-			pH += 10;
-			i++;
-			System.out.println("You've been dealt a ten!");
-		      }
-		    break;
-		  case 11:
-		    if (ja < 4)
-		      {
-			ja++;
-			pH += 10;
-			i++;
-			System.out.println("You've been dealt a jack!");
-		      }
-		    break;
-		  case 12:
-		    if (qu < 4)
-		      {
-			qu++;
-			pH += 10;
-			i++;
-			System.out.println("You've been dealt a queen!");
-		      }
-		    break;
-		  case 13:
-		    if (ki < 4)
-		      {
-			ki++;
-			pH += 10;
-			i++;
-			System.out.println("You've been dealt a king!");
-		      }
-		    break;
+		    this.plAce = false;
+		    this.pH -= 10;
 		  }
-
 	      }
-	    if (pH > 21 && plAce > 0) //checks for high aces, that way the player can't bust with an ace high
-		  {
-		    pH -= 10;
-		    plAce--;
-		  }
-		System.out.println("You have: "+pH+". ");
-		if (pH < 21)
-		  {
-		    System.out.print ("Hit again? 1 for yes, 2 for no.");
-		    j = input.nextInt(); //hit check, anything <2 is another hit
-		  }
-		else if (pH == 21)
-		  {
-		    System.out.print ("You win!");
-		    j = 2; //win check
-		  }
-		else
-		  {
-		    System.out.print ("You lose!");
-		   j= 2;
-		  }
+	    else if (temp.equalsIgnoreCase ("N"))
+	      {
+		inv = false;
+	      }
+	    else
+	      {
+		System.out.println ("Invalid input!");
+	      }
+
 	  }
-	if(pH < 21) {
-		while(dH<17 && pH >dH) { //dealer stands on 17
-		for (int i = 0; i < 1;) //card dealt check
+	if (this.pH == 21)
+	  {
+	    System.out.println ("You win!");
+	  }
+	else if (this.pH > 21)
+	  {
+	    System.out.println ("You lose...");
+	  }
+	else
+	  {
+	    System.out.println ("House's turn...");
+	    this.dH = hit (this.dH, false);
+	    this.dH = hit (this.dH, false);
+	    System.out.println ("House has: " + this.dH + ".");
+	    if (this.dH == 21)
 	      {
-		temp = rand.nextInt (13) + 1;
-
-		switch (temp) //same deal, but no user input
-		  {
-		  case 1:
-		    if (ac < 4)
-		      {
-			ac++;
-			if (dH < 11)
-			  {
-			    dH += 11;
-			    dlAce++;
-			  }
-			else
-			  {
-			    dH++;
-			  }
-			System.out.println("Dealer's been dealt an ace!");
-			i++;
-		      }
-		    break;
-		  case 2:
-		    if (tw < 4)
-		      {
-			tw++;
-			dH += 2;
-			i++;
-			System.out.println("Dealer's been dealt a two!");
-		      }
-		    break;
-		  case 3:
-		    if (th < 4)
-		      {
-			th++;
-			dH += 3;
-			i++;
-			System.out.println("Dealer's been dealt a three!");
-		      }
-		    break;
-		  case 4:
-		    if (fo < 4)
-		      {
-			fo++;
-			dH += 4;
-			i++;
-			System.out.println("Dealer's been dealt a four!");
-		      }
-		    break;
-		  case 5:
-		    if (fi < 4)
-		      {
-			fi++;
-			dH += 5;
-			i++;
-			System.out.println("Dealer's been dealt a five!");
-		      }
-		    break;
-		  case 6:
-		    if (si < 4)
-		      {
-			si++;
-			dH += 6;
-			i++;
-			System.out.println("Dealer's been dealt a six!");
-		      }
-		    break;
-		  case 7:
-		    if (se < 4)
-		      {
-			se++;
-			dH += 7;
-			i++;
-			System.out.println("Dealer's been dealt a seven!");
-		      }
-		    break;
-		  case 8:
-		    if (ei < 4)
-		      {
-			ei++;
-			dH += 8;
-			i++;
-			System.out.println("Dealer's been dealt an eight!");
-		      }
-		    break;
-		  case 9:
-		    if (ni < 4)
-		      {
-			ni++;
-			dH += 9;
-			i++;
-			System.out.println("Dealer's been dealt a nine!");
-		      }
-		    break;
-		  case 10:
-		    if (te < 4)
-		      {
-			te++;
-			dH += 10;
-			i++;
-			System.out.println("Dealer's been dealt a ten!");
-		      }
-		    break;
-		  case 11:
-		    if (ja < 4)
-		      {
-			ja++;
-			dH += 10;
-			i++;
-			System.out.println("Dealer's been dealt a jack!");
-		      }
-		    break;
-		  case 12:
-		    if (qu < 4)
-		      {
-			qu++;
-			dH += 10;
-			i++;
-			System.out.println("Dealer's been dealt a queen!");
-		      }
-		    break;
-		  case 13:
-		    if (ki < 4)
-		      {
-			ki++;
-			dH += 10;
-			i++;
-			System.out.println("Dealer's been dealt a king!");
-		      }
-		    break;
-		  }
-
+		System.out.println ("Blackjack! House wins!");
 	      }
-	    if (dH > 21 && dlAce > 0) //dealer ace check
+	    else
+	      {
+		while (this.dH < 17)
 		  {
-		    dH -= 10;
-		    dlAce--;
-		  }
-		System.out.println("Dealer has: "+dH);
-	
-      }
-		
-		if (pH > dH || dH >21) //second win conditions after hits have been distributed
-		  {
-		    System.out.print ("You win!");
 		    
+		    this.dH = hit (this.dH, false);
+		    if (this.dH > 21 && this.dlAce)
+		      {
+			this.dlAce = false;
+			this.dH -= 10;
+		      }
+		  System.out.println ("House has: " + this.dH + ".");
 		  }
-		else if(pH == dH) {
-			System.out.print ("Push!");
-		}
-		else
+		  	if (this.dH > 21 || this.dH < this.pH)
 		  {
-		    System.out.print ("You lose!");
+		    System.out.println ("You win!");
 		  }
-	}
-    	
-    	
-    }
-    System.out.println("\nPlay again? 1 for yes, 2 for no."); //play again starts the loop as play < 2
-    play = input.nextInt();
+		else if (this.dH == 21 || this.dH>this.pH)
+		  {
+		    System.out.println ("House wins!");
+		  }
+	
+		  else{
+		      System.out.println("Push!");
+		  }
+	      }
+	  }
+
+      }
+
+
   }
-	System.exit(0); //exit
- }
+
+  public static void main (String[]args)
+  {
+      Scanner kB = new Scanner (System.in);
+    Main main = new Main ();
+    
+    while(true){
+    main.run ();
+    System.out.println("Play again?");
+    if(kB.nextLine().equalsIgnoreCase("n")){
+        System.exit(0);
+    }
+    main = new Main();
+    }
+
+  }
 }
