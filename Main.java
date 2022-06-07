@@ -12,7 +12,8 @@ public class Main
   public int hit (int score, boolean player)
   {
     boolean hit = true;
-    while (hit)
+    try{
+		while (hit)
       {
 	int temp = rand.nextInt (13) + 1;
 	switch (temp)
@@ -150,7 +151,11 @@ public class Main
 	      }
 	    break;
 	  }
+	  Thread.sleep(500);
       }
+	}catch(InterruptedException ieException){
+		ieException.printStackTrace();
+	  }
     return score;
   }
   public void run ()
