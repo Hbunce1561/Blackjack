@@ -1,5 +1,4 @@
 import java.util.*;
-
 public class Main
 { 
   private int pH = 0;		// score for player
@@ -170,9 +169,9 @@ public class Main
       {
 	boolean inv = true;
 	String temp = "";
-	while (inv && this.pH < 21)
+	while (inv && this.pH < 21 )
 	  {
-	    System.out.println ("You have: " + this.pH + "."
+		System.out.println ("You have: " + this.pH + "."
 				+ "\nWould you like to hit? (y/n)");
 	    temp = input.nextLine ();
 	    if (temp.equalsIgnoreCase ("Y"))
@@ -214,7 +213,7 @@ public class Main
 	      }
 	    else
 	      {
-		while (this.dH < 17)
+		while (this.dH < 17 && this.dH < this.pH)
 		  {
 		    
 		    this.dH = hit (this.dH, false);
@@ -244,16 +243,16 @@ public class Main
 
 
   }
-
-  public static void main (String[]args)
-  {
+  
+  public static void main (String[]args) throws Exception
+{
       Scanner kB = new Scanner (System.in);
     Main main = new Main ();
-    
     while(true){
     main.run ();
     System.out.println("Play again?");
     if(kB.nextLine().equalsIgnoreCase("n")){
+		kB.close();
         System.exit(0);
     }
     main = new Main();
